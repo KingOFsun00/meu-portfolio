@@ -337,3 +337,152 @@ function initProjectFilter() {
         });
     });
 }
+
+// Dados das habilidades (personalize com suas habilidades)
+const skillsData = {
+    frontend: [
+        { name: "HTML5", level: 95, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
+        { name: "CSS3", level: 90, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
+        { name: "JavaScript", level: 85, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
+        { name: "React", level: 80, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+        { name: "Vue.js", level: 70, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg" },
+    ],
+    backend: [
+        { name: "Node.js", level: 85, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
+        { name: "Express", level: 80, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" },
+        { name: "Python", level: 75, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
+        { name: "Java", level: 70, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" },
+    ],
+    mobile: [
+        { name: "React Native", level: 75, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+        { name: "Flutter", level: 60, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg" },
+    ],
+    tools: [
+        { name: "Git", level: 85, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
+        { name: "GitHub", level: 80, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" },
+        { name: "VS Code", level: 90, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" },
+        { name: "Figma", level: 70, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" },
+    ]
+};
+
+// Dados para o gráfico (personalize com seus dados)
+const chartData = {
+    labels: ["Front-end", "Back-end", "Mobile", "UI/UX", "Banco de Dados", "DevOps"],
+    datasets: [{
+        label: "Nível de Conhecimento",
+        data: [85, 75, 65, 70, 80, 60],
+        backgroundColor: [
+            'rgba(108, 99, 255, 0.7)',
+            'rgba(77, 68, 219, 0.7)',
+            'rgba(255, 101, 132, 0.7)',
+            'rgba(75, 192, 192, 0.7)',
+            'rgba(153, 102, 255, 0.7)',
+            'rgba(255, 159, 64, 0.7)'
+        ],
+        borderColor: [
+            'rgba(108, 99, 255, 1)',
+            'rgba(77, 68, 219, 1)',
+            'rgba(255, 101, 132, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 2,
+        hoverOffset: 10
+    }]
+};
+
+// Função para renderizar as habilidades
+function renderSkills() {
+    // Renderiza cada categoria
+    Object.keys(skillsData).forEach(category => {
+        const container = document.getElementById(`${category}-skills`);
+        container.innerHTML = skillsData[category].map(skill => `
+            <div class="skill-item">
+                <img src="${skill.icon}" alt="${skill.name}" class="skill-icon">
+                <span class="skill-name">${skill.name}</span>
+                <div class="skill-level">
+                    <div class="skill-level-bar" style="width: ${skill.level}%"></div>
+                </div>
+            </div>
+        `).join('');
+    });
+    
+    // Inicializa o gráfico
+    initSkillsChart();
+}
+
+// Função para inicializar o gráfico de habilidades
+function initSkillsChart() {
+    const ctx = document.getElementById('skillsChart').getContext('2d');
+    
+    // Verifica se Chart.js está carregado
+    if (typeof Chart === 'undefined') {
+        console.warn('Chart.js não está carregado');
+        return;
+    }
+    
+    new Chart(ctx, {
+        type: 'radar',
+        data: chartData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                r: {
+                    angleLines: {
+                        color: 'rgba(255, 255, 255, 0.1)'
+                    },
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)'
+                    },
+                    pointLabels: {
+                        color: 'white',
+                        font: {
+                            size: 14
+                        }
+                    },
+                    ticks: {
+                        display: false,
+                        beginAtZero: true,
+                        max: 100,
+                        stepSize: 20,
+                        backdropColor: 'transparent'
+                    },
+                    suggestedMin: 0,
+                    suggestedMax: 100
+                }
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        color: 'white',
+                        font: {
+                            size: 14
+                        }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return `${context.dataset.label}: ${context.raw}%`;
+                        }
+                    }
+                }
+            },
+            elements: {
+                line: {
+                    tension: 0.1
+                }
+            }
+        }
+    });
+}
+
+// Chama a função quando a página carrega
+document.addEventListener('DOMContentLoaded', function() {
+    // ... outros códigos que já estavam aqui ...
+    
+    // Renderiza as habilidades
+    renderSkills();
+});
