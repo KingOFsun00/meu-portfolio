@@ -447,3 +447,26 @@ section {
         height: 300px;
     }
 }
+.skill-level-bar.learning {
+    background: var(--accent-color);
+}
+
+.skill-item:hover .skill-level-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.3);
+    animation: wave 1.5s infinite;
+}
+
+@keyframes wave {
+    0% {
+        transform: translateX(-100%) skewX(-30deg); /* Começa 100% à esquerda e inclinado para dar efeito de brilho */
+    }
+    100% {
+        transform: translateX(200%) skewX(-30deg); /* Termina 200% à direita (garante que saia completamente) e inclinado */
+    }
+}

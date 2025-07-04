@@ -486,3 +486,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Renderiza as habilidades
     renderSkills();
 });
+// Adicione uma classe para habilidades em aprendizado
+if (skill.level < 50) {
+    return `<div class="skill-level-bar learning" style="width: ${skill.level}%"></div>`;
+}
