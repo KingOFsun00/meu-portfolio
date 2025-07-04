@@ -1,492 +1,395 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // --- Custom Cursor ---
-    const cursor = document.querySelector('.cursor');
-
-    if (cursor) { // Ensure cursor element exists
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.pageX + 'px';
-            cursor.style.top = e.pageY + 'px';
-        });
-
-        const hoverables = document.querySelectorAll('a, button, .cta-button, .nav-links li');
-
-        hoverables.forEach(item => {
-            item.addEventListener('mouseenter', () => {
-                cursor.classList.add('cursor-grow');
-            });
-
-            item.addEventListener('mouseleave', () => {
-                cursor.classList.remove('cursor-grow');
-            });
-        });
-    }
-
-    // --- Mobile Menu ---
-    const burger = document.querySelector('.burger');
-    const navLinks = document.querySelector('.nav-links');
-
-    if (burger && navLinks) { // Ensure elements exist
-        burger.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            burger.classList.toggle('active');
-        });
-
-        const navItems = document.querySelectorAll('.nav-links li a');
-        navItems.forEach(item => {
-            item.addEventListener('click', () => {
-                // Close menu when a navigation item is clicked
-                navLinks.classList.remove('active');
-                burger.classList.remove('active');
-            });
-        });
-    }
-
-    // --- Smooth Scrolling for Anchor Links ---
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-
-            if (targetElement) { // Ensure the target element exists
-                // Adjust scroll position to account for a fixed header
-                const headerOffset = 80; // Assuming your header height is around 80px
-                const elementPosition = targetElement.getBoundingClientRect().top + window.scrollY;
-                const offsetPosition = elementPosition - headerOffset;
-
-                window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-
-    // --- Fade-in Animation on Scroll ---
-    const fadeElements = document.querySelectorAll('.fade-in');
-
-    const appearOptions = {
-        threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px"
+    // --- Configurações Globais ---
+    const config = {
+        github: {
+            username: 'KingOFsun00',
+            excludeRepos: [],
+            includeForks: false,
+            maxProjects: 6
+        },
+        skills: {
+            frontend: [
+                { name: "HTML5", level: 95, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
+                { name: "CSS3", level: 90, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
+                { name: "JavaScript", level: 85, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
+                { name: "React", level: 80, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+                { name: "Vue.js", level: 70, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg" },
+            ],
+            backend: [
+                { name: "Node.js", level: 85, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
+                { name: "Express", level: 80, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" },
+                { name: "Python", level: 75, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
+                { name: "Java", level: 70, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" },
+            ],
+            mobile: [
+                { name: "React Native", level: 75, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+                { name: "Flutter", level: 60, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg" },
+            ],
+            tools: [
+                { name: "Git", level: 85, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
+                { name: "GitHub", level: 80, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" },
+                { name: "VS Code", level: 90, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" },
+                { name: "Figma", level: 70, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" },
+            ]
+        },
+        chart: {
+            labels: ["Front-end", "Back-end", "Mobile", "UI/UX", "Banco de Dados", "DevOps"],
+            data: [85, 75, 65, 70, 80, 60]
+        }
     };
 
-    const appearOnScroll = new IntersectionObserver(function(entries, observer) {
-        entries.forEach(entry => {
-            if (!entry.isIntersecting) {
-                return;
-            } else {
-                entry.target.classList.add('appear');
-                observer.unobserve(entry.target); // Stop observing once it has appeared
-            }
-        });
-    }, appearOptions);
-
-    fadeElements.forEach(fader => {
-        appearOnScroll.observe(fader);
-    });
-
-    // --- Header Scroll Effect ---
-    const header = document.querySelector('.header');
-    if (header) { // Ensure header element exists
-        window.addEventListener('scroll', () => {
-            const scrollPosition = window.scrollY;
-
-            if (scrollPosition > 100) {
-                header.style.backgroundColor = 'white';
-                header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
-            } else {
-                header.style.backgroundColor = 'transparent';
-                header.style.boxShadow = 'none';
-            }
-        });
-    }
-
-    // --- Typing Effect ---
-    const typedElements = document.querySelectorAll('.typed');
-
-    typedElements.forEach(element => {
-        const text = element.textContent;
-        element.textContent = ''; // Clear content initially
-
-        let i = 0;
-        // Use a function for the typing logic to allow for immediate execution if needed
-        const typeChar = () => {
-            if (i < text.length) {
-                element.textContent += text.charAt(i);
-                i++;
-            } else {
-                clearInterval(typingInterval); // Clear the interval when done
-            }
-        };
-
-        const typingInterval = setInterval(typeChar, 100);
-    });
-
-    // --- Fetch GitHub Projects (Initial call moved here) ---
+    // --- Inicialização de Componentes ---
+    initCustomCursor();
+    initMobileMenu();
+    initSmoothScrolling();
+    initScrollAnimations();
+    initHeaderEffects();
+    initTypingEffect();
+    renderSkills();
     fetchGitHubProjects();
-});
 
-// --- GitHub API Configuration and Functions ---
+    // --- Funções de Inicialização ---
 
-/**
- * Fetches and displays GitHub repositories for a given user.
- * @async
- * @function fetchGitHubProjects
- * @returns {Promise<void>}
- */
-async function fetchGitHubProjects() {
-    // IMPORTANT: Replace 'YOUR_GITHUB_USERNAME' with your actual GitHub username.
-    const username = 'KingOFsun00';
-    const container = document.getElementById('projects-container');
+    function initCustomCursor() {
+        const cursor = document.querySelector('.cursor');
+        if (!cursor) return;
 
-    if (!container) {
-        console.warn('Element with ID "projects-container" not found. Cannot display GitHub projects.');
-        return;
-    }
-
-    // Show a loading message or spinner
-    container.innerHTML = '<p class="loading-message">Carregando projetos do GitHub...</p>';
-
-    try {
-        const response = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&direction=desc`);
-
-        if (!response.ok) {
-            if (response.status === 404) {
-                throw new Error(`GitHub user "${username}" not found.`);
-            }
-            throw new Error(`GitHub API error: ${response.statusText}`);
-        }
-
-        const projects = await response.json();
-
-        container.innerHTML = ''; // Clear loading message
-
-        // Filter projects: remove forks, private repos, archived repos, and the user's own profile repo (if it exists)
-        const filteredProjects = projects.filter(project =>
-            !project.fork && !project.private && !project.archived && project.name.toLowerCase() !== username.toLowerCase()
-        );
-
-        if (filteredProjects.length === 0) {
-            container.innerHTML = '<p class="no-projects">Nenhum projeto público relevante encontrado no GitHub.</p>';
-            return;
-        }
-
-        // Limit the number of projects displayed (e.g., top 6 most recently updated)
-        const displayedProjects = filteredProjects.slice(0, 6);
-
-        // Create and append project cards
-        displayedProjects.forEach(project => {
-            const projectCard = createProjectCard(project);
-            container.appendChild(projectCard);
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = `${e.pageX}px`;
+            cursor.style.top = `${e.pageY}px`;
         });
 
-        // Initialize project filtering functionality after projects are loaded
-        initProjectFilter();
-
-    } catch (error) {
-        console.error('Erro ao buscar projetos do GitHub:', error);
-        container.innerHTML = `<p class="error-message">Erro ao carregar projetos do GitHub: ${error.message}. Por favor, verifique o username.</p>`;
-    }
-}
-
-/**
- * Creates an HTML card element for a given GitHub project.
- * @param {object} project - The GitHub project object.
- * @returns {HTMLElement} The created project card element.
- */
-function createProjectCard(project) {
-    const card = document.createElement('div');
-    card.className = 'project-card fade-in'; // Keep fade-in for individual cards
-
-    // Detect main technologies (can be expanded for more accuracy)
-    const technologies = detectTechnologies(project);
-
-    // Format description, provide a fallback if none exists
-    const description = project.description || 'Este projeto ainda não possui uma descrição detalhada.';
-
-    card.innerHTML = `
-        <div class="project-image">
-            <img src="https://raw.githubusercontent.com/${project.full_name}/main/screenshot.jpg"
-                 alt="Screenshot do projeto ${project.name}"
-                 onerror="this.onerror=null;this.src='images/project-placeholder.jpg';">
-        </div>
-        <div class="project-info">
-            <h3 class="project-title">${formatProjectName(project.name)}</h3>
-            <p class="project-description">${description}</p>
-            <div class="project-tech">
-                ${technologies.length > 0 ? technologies.map(tech => `<span class="tech-tag">${tech}</span>`).join('') : '<span class="tech-tag">Tecnologias não detectadas</span>'}
-            </div>
-            <div class="project-links">
-                ${project.homepage && project.homepage !== '' ? // Ensure homepage URL is not empty
-                    `<a href="${project.homepage}" class="demo-link" target="_blank" rel="noopener noreferrer">
-                        <i class="fas fa-external-link-alt"></i> Demo
-                    </a>` : ''
-                }
-                <a href="${project.html_url}" class="code-link" target="_blank" rel="noopener noreferrer">
-                    <i class="fab fa-github"></i> Código
-                </a>
-            </div>
-        </div>
-    `;
-
-    return card;
-}
-
-/**
- * Detects technologies based on project language and name.
- * This function can be made more robust if needed.
- * @param {object} project - The GitHub project object.
- * @returns {string[]} An array of detected technology names.
- */
-function detectTechnologies(project) {
-    const techs = [];
-
-    
-    if (project.language) {
-        techs.push(project.language);
+        document.querySelectorAll('a, button, .cta-button, .nav-links li').forEach(item => {
+            item.addEventListener('mouseenter', () => cursor.classList.add('cursor-grow'));
+            item.addEventListener('mouseleave', () => cursor.classList.remove('cursor-grow'));
+        });
     }
 
-   
-    const name = project.name.toLowerCase();
+    function initMobileMenu() {
+        const burger = document.querySelector('.burger');
+        const navLinks = document.querySelector('.nav-links');
+        if (!burger || !navLinks) return;
 
-    if (name.includes('react') && !techs.includes('React')) {
-        techs.push('React');
-    }
-    if (name.includes('node') && !techs.includes('Node.js')) {
-        techs.push('Node.js');
-    }
-    if (name.includes('vue') && !techs.includes('Vue.js')) {
-        techs.push('Vue.js');
-    }
-    if (name.includes('angular') && !techs.includes('Angular')) {
-        techs.push('Angular');
-    }
-    if (name.includes('javascript') && !techs.includes('JavaScript')) {
-        techs.push('JavaScript');
-    }
-    if (name.includes('html') && !techs.includes('HTML')) {
-        techs.push('HTML');
-    }
-    if (name.includes('css') && !techs.includes('CSS')) {
-        techs.push('CSS');
-    }
-    if (name.includes('python') && !techs.includes('Python')) {
-        techs.push('Python');
-    }
-    if (name.includes('java') && !techs.includes('Java')) {
-        techs.push('Java');
-    }
-    if (name.includes('php') && !techs.includes('PHP')) {
-        techs.push('PHP');
-    }
-    if (name.includes('typescript') && !techs.includes('TypeScript')) {
-        techs.push('TypeScript');
-    }
+        burger.addEventListener('click', () => {
+            burger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
 
-
-   
-    return [...new Set(techs)];
-}
-
-/**
- * Formats a project name by replacing hyphens with spaces and capitalizing each word.
- * @param {string} name - The original project name.
- * @returns {string} The formatted project name.
- */
-function formatProjectName(name) {
-    return name
-        .split('-')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ');
-}
-
-
-function initProjectFilter() {
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const projectsContainer = document.getElementById('projects-container');
-
-    if (!filterBtns.length || !projectsContainer) {
-        
-        return;
-    }
-
-    filterBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-           
-            filterBtns.forEach(b => b.classList.remove('active'));
-            this.classList.add('active'); 
-
-            const filter = this.dataset.filter.toLowerCase(); 
-            
-            const projects = projectsContainer.querySelectorAll('.project-card');
-
-            projects.forEach(project => {
-                if (filter === 'all') {
-                    project.style.display = 'block'; 
-                } else {
-                    const techTags = project.querySelectorAll('.tech-tag');
-                    
-                    const hasTech = Array.from(techTags).some(tag =>
-                        tag.textContent.toLowerCase().includes(filter)
-                    );
-
-                    project.style.display = hasTech ? 'block' : 'none';
-                }
+        document.querySelectorAll('.nav-links li a').forEach(item => {
+            item.addEventListener('click', () => {
+                burger.classList.remove('active');
+                navLinks.classList.remove('active');
             });
         });
-    });
-}
-
-// Dados das habilidades (personalize com suas habilidades)
-const skillsData = {
-    frontend: [
-        { name: "HTML5", level: 95, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
-        { name: "CSS3", level: 90, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
-        { name: "JavaScript", level: 85, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
-        { name: "React", level: 80, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-        { name: "Vue.js", level: 70, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg" },
-    ],
-    backend: [
-        { name: "Node.js", level: 85, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
-        { name: "Express", level: 80, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" },
-        { name: "Python", level: 75, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
-        { name: "Java", level: 70, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" },
-    ],
-    mobile: [
-        { name: "React Native", level: 75, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-        { name: "Flutter", level: 60, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg" },
-    ],
-    tools: [
-        { name: "Git", level: 85, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
-        { name: "GitHub", level: 80, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" },
-        { name: "VS Code", level: 90, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" },
-        { name: "Figma", level: 70, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" },
-    ]
-};
-
-// Dados para o gráfico (personalize com seus dados)
-const chartData = {
-    labels: ["Front-end", "Back-end", "Mobile", "UI/UX", "Banco de Dados", "DevOps"],
-    datasets: [{
-        label: "Nível de Conhecimento",
-        data: [85, 75, 65, 70, 80, 60],
-        backgroundColor: [
-            'rgba(108, 99, 255, 0.7)',
-            'rgba(77, 68, 219, 0.7)',
-            'rgba(255, 101, 132, 0.7)',
-            'rgba(75, 192, 192, 0.7)',
-            'rgba(153, 102, 255, 0.7)',
-            'rgba(255, 159, 64, 0.7)'
-        ],
-        borderColor: [
-            'rgba(108, 99, 255, 1)',
-            'rgba(77, 68, 219, 1)',
-            'rgba(255, 101, 132, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-        ],
-        borderWidth: 2,
-        hoverOffset: 10
-    }]
-};
-
-// Função para renderizar as habilidades
-function renderSkills() {
-    // Renderiza cada categoria
-    Object.keys(skillsData).forEach(category => {
-        const container = document.getElementById(`${category}-skills`);
-        container.innerHTML = skillsData[category].map(skill => `
-            <div class="skill-item">
-                <img src="${skill.icon}" alt="${skill.name}" class="skill-icon">
-                <span class="skill-name">${skill.name}</span>
-                <div class="skill-level">
-                    <div class="skill-level-bar" style="width: ${skill.level}%"></div>
-                </div>
-            </div>
-        `).join('');
-    });
-    
-    // Inicializa o gráfico
-    initSkillsChart();
-}
-
-// Função para inicializar o gráfico de habilidades
-function initSkillsChart() {
-    const ctx = document.getElementById('skillsChart').getContext('2d');
-    
-    // Verifica se Chart.js está carregado
-    if (typeof Chart === 'undefined') {
-        console.warn('Chart.js não está carregado');
-        return;
     }
-    
-    new Chart(ctx, {
-        type: 'radar',
-        data: chartData,
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                r: {
-                    angleLines: {
-                        color: 'rgba(255, 255, 255, 0.1)'
-                    },
-                    grid: {
-                        color: 'rgba(255, 255, 255, 0.1)'
-                    },
-                    pointLabels: {
-                        color: 'white',
-                        font: {
-                            size: 14
-                        }
-                    },
-                    ticks: {
-                        display: false,
-                        beginAtZero: true,
-                        max: 100,
-                        stepSize: 20,
-                        backdropColor: 'transparent'
-                    },
-                    suggestedMin: 0,
-                    suggestedMax: 100
+
+    function initSmoothScrolling() {
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (!target) return;
+
+                const headerOffset = 80;
+                const targetPosition = target.getBoundingClientRect().top + window.scrollY - headerOffset;
+
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    }
+
+    function initScrollAnimations() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('appear');
+                    observer.unobserve(entry.target);
                 }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    }
+
+    function initHeaderEffects() {
+        const header = document.querySelector('.header');
+        if (!header) return;
+
+        window.addEventListener('scroll', () => {
+            header.style.backgroundColor = window.scrollY > 100 ? 'white' : 'transparent';
+            header.style.boxShadow = window.scrollY > 100 ? '0 5px 20px rgba(0, 0, 0, 0.1)' : 'none';
+        });
+    }
+
+    function initTypingEffect() {
+        document.querySelectorAll('.typed').forEach(element => {
+            const text = element.textContent;
+            element.textContent = '';
+            
+            let i = 0;
+            const typingInterval = setInterval(() => {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(typingInterval);
+                }
+            }, 100);
+        });
+    }
+
+    // --- Funções de Habilidades ---
+
+    function renderSkills() {
+        Object.keys(config.skills).forEach(category => {
+            const container = document.getElementById(`${category}-skills`);
+            if (!container) return;
+
+            container.innerHTML = config.skills[category].map(skill => `
+                <div class="skill-item">
+                    <img src="${skill.icon}" alt="${skill.name}" class="skill-icon">
+                    <span class="skill-name">${skill.name}</span>
+                    <div class="skill-level">
+                        <div class="skill-level-bar ${skill.level < 50 ? 'learning' : ''}" 
+                             style="width: ${skill.level}%"></div>
+                    </div>
+                </div>
+            `).join('');
+        });
+
+        initSkillsChart();
+    }
+
+    function initSkillsChart() {
+        const ctx = document.getElementById('skillsChart')?.getContext('2d');
+        if (!ctx || typeof Chart === 'undefined') return;
+
+        new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: config.chart.labels,
+                datasets: [{
+                    label: "Nível de Conhecimento",
+                    data: config.chart.data,
+                    backgroundColor: [
+                        'rgba(108, 99, 255, 0.7)',
+                        'rgba(77, 68, 219, 0.7)',
+                        'rgba(255, 101, 132, 0.7)',
+                        'rgba(75, 192, 192, 0.7)',
+                        'rgba(153, 102, 255, 0.7)',
+                        'rgba(255, 159, 64, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(108, 99, 255, 1)',
+                        'rgba(77, 68, 219, 1)',
+                        'rgba(255, 101, 132, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 2,
+                    hoverOffset: 10
+                }]
             },
-            plugins: {
-                legend: {
-                    labels: {
-                        color: 'white',
-                        font: {
-                            size: 14
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        angleLines: { color: 'rgba(255, 255, 255, 0.1)' },
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        pointLabels: { color: 'white', font: { size: 14 } },
+                        ticks: { display: false, beginAtZero: true, max: 100 }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: { color: 'white', font: { size: 14 } }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: ctx => `${ctx.dataset.label}: ${ctx.raw}%`
                         }
                     }
                 },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            return `${context.dataset.label}: ${context.raw}%`;
-                        }
-                    }
-                }
-            },
-            elements: {
-                line: {
-                    tension: 0.1
-                }
+                elements: { line: { tension: 0.1 } }
             }
-        }
-    });
-}
+        });
+    }
 
-// Chama a função quando a página carrega
-document.addEventListener('DOMContentLoaded', function() {
-    // ... outros códigos que já estavam aqui ...
-    
-    // Renderiza as habilidades
-    renderSkills();
+    // --- Funções de Projetos do GitHub ---
+
+    async function fetchGitHubProjects() {
+        const container = document.getElementById('projects-container');
+        if (!container) return;
+
+        container.innerHTML = `
+            <div class="loader">
+                <div class="spinner"></div>
+                <p>Carregando projetos do GitHub...</p>
+            </div>
+        `;
+
+        try {
+            const response = await fetch(`https://api.github.com/users/${config.github.username}/repos?sort=updated&per_page=100`);
+            if (!response.ok) throw new Error(`Erro GitHub: ${response.status}`);
+
+            const repos = await response.json();
+            const filteredRepos = filterAndSortRepos(repos);
+            displayProjects(container, filteredRepos);
+            initProjectFilter();
+
+        } catch (error) {
+            console.error('Erro ao carregar projetos:', error);
+            container.innerHTML = `
+                <div class="error-message">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p>Não foi possível carregar os projetos do GitHub.</p>
+                    <a href="https://github.com/${config.github.username}" 
+                       target="_blank" 
+                       class="github-link">
+                        Ver meus projetos no GitHub
+                    </a>
+                </div>
+            `;
+        }
+    }
+
+    function filterAndSortRepos(repos) {
+        return repos
+            .filter(repo => (
+                !config.github.excludeRepos.includes(repo.name) &&
+                repo.name.toLowerCase() !== config.github.username.toLowerCase() &&
+                repo.size > 0 &&
+                (config.github.includeForks || !repo.fork)
+            ))
+            .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
+            .slice(0, config.github.maxProjects);
+    }
+
+    function displayProjects(container, projects) {
+        if (projects.length === 0) {
+            container.innerHTML = `
+                <div class="no-projects">
+                    <i class="fas fa-folder-open"></i>
+                    <p>Nenhum projeto público encontrado.</p>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = '';
+        projects.forEach(project => {
+            container.appendChild(createProjectCard(project));
+        });
+    }
+
+    function createProjectCard(repo) {
+        const card = document.createElement('div');
+        card.className = 'project-card fade-in';
+        card.dataset.technologies = detectTechnologies(repo).join(',').toLowerCase();
+
+        const updatedAt = new Date(repo.updated_at).toLocaleDateString('pt-BR');
+        const description = repo.description || 'Projeto de desenvolvimento sem descrição.';
+
+        card.innerHTML = `
+            <div class="project-header">
+                <h3 class="project-title">${formatProjectName(repo.name)}</h3>
+                <span class="project-date">Atualizado em ${updatedAt}</span>
+            </div>
+            
+            <div class="project-body">
+                <p class="project-description">${description}</p>
+                
+                <div class="project-meta">
+                    <div class="project-tech">
+                        ${createTechBadges(repo)}
+                    </div>
+                    
+                    <div class="project-stats">
+                        <span class="stars"><i class="fas fa-star"></i> ${repo.stargazers_count}</span>
+                        <span class="forks"><i class="fas fa-code-branch"></i> ${repo.forks_count}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="project-footer">
+                <a href="${repo.html_url}" target="_blank" class="project-link">
+                    <i class="fab fa-github"></i> Ver código
+                </a>
+                
+                ${repo.homepage ? `
+                    <a href="${repo.homepage}" target="_blank" class="project-link demo-link">
+                        <i class="fas fa-external-link-alt"></i> Ver demo
+                    </a>
+                ` : ''}
+            </div>
+        `;
+
+        return card;
+    }
+
+    function detectTechnologies(repo) {
+        const techs = new Set();
+        if (repo.language) techs.add(repo.language);
+
+        const textToAnalyze = `${repo.name} ${repo.description || ''}`.toLowerCase();
+        const techKeywords = {
+            'react': 'React', 'angular': 'Angular', 'vue': 'Vue.js',
+            'node': 'Node.js', 'express': 'Express', 'typescript': 'TypeScript',
+            'javascript': 'JavaScript', 'python': 'Python', 'django': 'Django',
+            'flask': 'Flask', 'java': 'Java', 'spring': 'Spring', 'php': 'PHP',
+            'laravel': 'Laravel', 'html': 'HTML', 'css': 'CSS', 'sass': 'SASS',
+            'bootstrap': 'Bootstrap', 'tailwind': 'Tailwind CSS', 'jquery': 'jQuery',
+            'mysql': 'MySQL', 'postgresql': 'PostgreSQL', 'mongodb': 'MongoDB',
+            'firebase': 'Firebase', 'docker': 'Docker', 'aws': 'AWS'
+        };
+
+        Object.entries(techKeywords).forEach(([keyword, techName]) => {
+            if (textToAnalyze.includes(keyword)) techs.add(techName);
+        });
+
+        return Array.from(techs);
+    }
+
+    function createTechBadges(repo) {
+        const techs = detectTechnologies(repo);
+        return techs.length > 0 
+            ? techs.map(tech => `<span class="tech-badge">${tech}</span>`).join('')
+            : '<span class="tech-badge unknown">Tecnologias diversas</span>';
+    }
+
+    function formatProjectName(name) {
+        return name
+            .replace(/[-_]/g, ' ')
+            .split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
+    }
+
+    function initProjectFilter() {
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        if (!filterButtons.length) return;
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                const filterValue = button.dataset.filter.toLowerCase();
+                document.querySelectorAll('.project-card').forEach(project => {
+                    project.style.display = filterValue === 'all' || 
+                        project.dataset.technologies.includes(filterValue) 
+                        ? 'block' 
+                        : 'none';
+                });
+            });
+        });
+    }
 });
-// Adicione uma classe para habilidades em aprendizado
-if (skill.level < 50) {
-    return `<div class="skill-level-bar learning" style="width: ${skill.level}%"></div>`;
-}
