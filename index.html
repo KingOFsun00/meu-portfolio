@@ -3,19 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Portfólio Incrível</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="animations.css">
+    <title>Matheus Araújo | Portfólio Full Stack</title>
+    <meta name="description" content="Portfólio de Matheus Araújo, Desenvolvedor Full Stack">
+    <meta name="theme-color" content="#6c63ff">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    
+    <!-- CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="cursor"></div>
+    <div id="particles-js"></div>
     
     <header class="header">
         <nav class="navbar">
-            <div class="logo">Portfólio<span>.</span></div>
+            <div class="logo">Matheus<span>.</span></div>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">Sobre</a></li>
@@ -23,56 +31,61 @@
                 <li><a href="#projects">Projetos</a></li>
                 <li><a href="#contact">Contato</a></li>
             </ul>
-             <button class="theme-switcher" aria-label="Alternar tema">
-             <i class="fas fa-moon"></i>
-            <i class="fas fa-sun"></i>
-             </button>
+            
+            <div class="stats-widget">
+                <div class="stat-item">
+                    <i class="fas fa-code-branch"></i>
+                    <span class="counter" data-target="127">0</span>
+                    <span>Commits</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-project-diagram"></i>
+                    <span class="counter" data-target="42">0</span>
+                    <span>Projetos</span>
+                </div>
+            </div>
+            
+            <button class="theme-switcher" aria-label="Alternar tema">
+                <i class="fas fa-moon"></i>
+                <i class="fas fa-sun"></i>
+            </button>
 
             <div class="burger">
                 <div class="line1"></div>
                 <div class="line2"></div>
                 <div class="line3"></div>
             </div>
-
-<div class="stats-widget">
-    <div class="stat-item">
-        <i class="fas fa-code-branch"></i>
-        <span class="counter" data-target="127">0</span>
-        <span>Commits</span>
-    </div>
-    <div class="stat-item">
-        <i class="fas fa-project-diagram"></i>
-        <span class="counter" data-target="42">0</span>
-        <span>Projetos</span>
-    </div>
-    
-</div>
-
         </nav>
     </header>
 
     <main>
         <section id="home" class="hero">
-            <div class="hero-content">
+            <div class="hero-content" data-aos="fade-right">
                 <h1 class="hero-title">Olá, eu sou <span class="highlight">Matheus Araújo</span></h1>
                 <h2 class="hero-subtitle">Desenvolvedor Full Stack</h2>
                 <p class="hero-description">Estudante universitário da UNINTER especializado em desenvolvimento Full Stack, com experiência em diversas tecnologias modernas para criação de soluções web completas e eficientes.</p>
                 <a href="#projects" class="cta-button">Ver meus projetos</a>
+                
+                <div class="social-links-hero">
+                    <a href="https://github.com/KingOFsun00" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                </div>
             </div>
-            <div class="hero-image">
+            <div class="hero-image" data-aos="fade-left">
                 <div class="image-wrapper">
-                    <img src="images/profile.png" alt="Matheus Araújo">
+                    <img src="https://via.placeholder.com/400x400" alt="Matheus Araújo">
                 </div>
             </div>
         </section>
 
         <section id="about" class="about">
             <div class="about-container">
-                <div class="about-image">
-                    <img src="images/about-me.jpg" alt="Matheus Araújo" class="profile-img">
+                <div class="about-image" data-aos="fade-right">
+                    <img src="https://via.placeholder.com/500x600" alt="Matheus Araújo" class="profile-img">
                     <div class="about-bg-shape"></div>
                 </div>
-                <div class="about-content">
+                <div class="about-content" data-aos="fade-left">
                     <h2 class="section-title">Sobre <span class="highlight">Mim</span></h2>
                     <p class="about-text">
                         Sou um desenvolvedor Full Stack apaixonado por tecnologia e soluções inovadoras. 
@@ -118,58 +131,47 @@
         </section>
 
         <section id="skills" class="skills">
+            <h2 class="section-title">Minhas Habilidades</h2>
+            <p class="section-subtitle">Tecnologias e ferramentas que domino</p>
+            
             <div class="skills-container">
-                <h2 class="section-title">Minhas Habilidades</h2>
-                <p class="section-subtitle">Tecnologias e ferramentas que domino</p>
-                
-                <div class="skills-grid">
-                    <!-- Habilidades técnicas -->
-                    <div class="skill-category">
-                        <h3 class="category-title">
-                            <i class="fas fa-code"></i>
-                            Front-end
-                        </h3>
-                        <div class="skills-list" id="frontend-skills">
-                            <!-- São preenchidas via JavaScript -->
-                        </div>
-                    </div>
-                    
-                    <div class="skill-category">
-                        <h3 class="category-title">
-                            <i class="fas fa-server"></i>
-                            Back-end
-                        </h3>
-                        <div class="skills-list" id="backend-skills">
-                            <!-- São preenchidas via JavaScript -->
-                        </div>
-                    </div>
-                    
-                    <div class="skill-category">
-                        <h3 class="category-title">
-                            <i class="fas fa-mobile-alt"></i>
-                            Mobile
-                        </h3>
-                        <div class="skills-list" id="mobile-skills">
-                            <!-- São preenchidas via JavaScript -->
-                        </div>
-                    </div>
-                    
-                    <div class="skill-category">
-                        <h3 class="category-title">
-                            <i class="fas fa-tools"></i>
-                            Ferramentas
-                        </h3>
-                        <div class="skills-list" id="tools-skills">
-                            <!-- São preenchidas via JavaScript -->
-                        </div>
-                    </div>
+                <div class="skill-category" data-aos="fade-up">
+                    <h3 class="category-title">
+                        <i class="fas fa-code"></i>
+                        Front-end
+                    </h3>
+                    <div class="skills-list" id="frontend-skills"></div>
                 </div>
                 
-                <div class="skills-chart">
-                    <h3 class="chart-title">Nível de Conhecimento</h3>
-                    <div class="chart-container">
-                        <canvas id="skillsChart"></canvas>
-                    </div>
+                <div class="skill-category" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="category-title">
+                        <i class="fas fa-server"></i>
+                        Back-end
+                    </h3>
+                    <div class="skills-list" id="backend-skills"></div>
+                </div>
+                
+                <div class="skill-category" data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="category-title">
+                        <i class="fas fa-mobile-alt"></i>
+                        Mobile
+                    </h3>
+                    <div class="skills-list" id="mobile-skills"></div>
+                </div>
+                
+                <div class="skill-category" data-aos="fade-up" data-aos-delay="300">
+                    <h3 class="category-title">
+                        <i class="fas fa-tools"></i>
+                        Ferramentas
+                    </h3>
+                    <div class="skills-list" id="tools-skills"></div>
+                </div>
+            </div>
+            
+            <div class="skills-chart" data-aos="fade-up">
+                <h3 class="chart-title">Nível de Conhecimento</h3>
+                <div class="chart-container">
+                    <canvas id="skillsChart"></canvas>
                 </div>
             </div>
         </section>
@@ -182,27 +184,18 @@
                 <button class="filter-btn" data-filter="html">HTML/CSS</button>
                 <button class="filter-btn" data-filter="react">React</button>
             </div>
-          <div class="projects-container" id="projects-container">
-    <div class="project-card placeholder">
-        <div class="project-image">
-            <div class="skeleton-box"></div>
-        </div>
-        <div class="project-info">
-            <div class="skeleton-line" style="width: 80%"></div>
-            <div class="skeleton-line" style="width: 60%"></div>
-        </div>
-    </div>
+            <div class="projects-grid" id="projects-container">
+                <div class="project-card placeholder">
+                    <div class="project-image">
+                        <div class="skeleton-box"></div>
+                    </div>
+                    <div class="project-info">
+                        <div class="skeleton-line" style="width: 80%"></div>
+                        <div class="skeleton-line" style="width: 60%"></div>
+                    </div>
+                </div>
+            </div>
         </section>
-
-<section id="tech-blog" class="section-dark">
-    <h2 class="section-title">Artigos Técnicos <span class="badge-new" id="blog-badge"></span></h2>
-    <div class="blog-grid" id="blog-container">
-        <!-- Posts serão carregados via JS -->
-    </div>
-    <a href="https://github.com/KingOFsun00/blog/issues" class="github-link" target="_blank">
-        Ver todos no GitHub <i class="fab fa-github"></i>
-    </a>
-</section>
 
         <section id="contact" class="contact">
             <div class="contact-container">
@@ -210,7 +203,7 @@
                 <p class="section-subtitle">Estou disponível para oportunidades, colaborações e projetos</p>
                 
                 <div class="contact-content">
-                    <div class="contact-info">
+                    <div class="contact-info" data-aos="fade-right">
                         <div class="info-item">
                             <i class="fas fa-envelope"></i>
                             <div>
@@ -234,24 +227,24 @@
                         </div>
                     </div>
                     
-                    <form class="contact-form" id="contactForm">
-    <div class="form-group">
-        <input type="text" id="name" name="name" placeholder="Seu nome" required minlength="3">
-    </div>
-    <div class="form-group">
-        <input type="email" id="email" name="email" placeholder="Seu email" required>
-    </div>
-    <div class="form-group">
-        <input type="text" id="subject" name="subject" placeholder="Assunto">
-    </div>
-    <div class="form-group">
-        <textarea id="message" name="message" placeholder="Sua mensagem" rows="5" required minlength="10"></textarea>
-    </div>
-    <button type="submit" class="cta-button" id="submitBtn">
-        <span class="btn-text">Enviar Mensagem</span>
-        <div class="loader"></div>
-    </button>
-</form>
+                    <form class="contact-form" id="contactForm" data-aos="fade-left">
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" placeholder="Seu nome" required minlength="3">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" placeholder="Seu email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="subject" name="subject" placeholder="Assunto">
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" name="message" placeholder="Sua mensagem" rows="5" required minlength="10"></textarea>
+                        </div>
+                        <button type="submit" class="cta-button" id="submitBtn">
+                            <span class="btn-text">Enviar Mensagem</span>
+                            <div class="loader"></div>
+                        </button>
+                    </form>
                 </div>
             </div>
         </section>
@@ -261,7 +254,7 @@
         <div class="footer-container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <div class="logo">Portfólio<span>.</span></div>
+                    <div class="logo">Matheus<span>.</span></div>
                     <p>Desenvolvendo soluções digitais com criatividade e tecnologia.</p>
                 </div>
                 <div class="footer-links">
@@ -277,20 +270,23 @@
                 <div class="footer-social">
                     <h4>Redes Sociais</h4>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-github"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
                     </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2023 Matheus Araújo. Todos os direitos reservados.</p>
+                <p>&copy; <span id="currentYear"></span> Matheus Araújo. Todos os direitos reservados.</p>
             </div>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
