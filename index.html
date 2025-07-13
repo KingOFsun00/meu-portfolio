@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="animations.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -22,11 +23,31 @@
                 <li><a href="#projects">Projetos</a></li>
                 <li><a href="#contact">Contato</a></li>
             </ul>
+             <button class="theme-switcher" aria-label="Alternar tema">
+             <i class="fas fa-moon"></i>
+            <i class="fas fa-sun"></i>
+             </button>
+
             <div class="burger">
                 <div class="line1"></div>
                 <div class="line2"></div>
                 <div class="line3"></div>
             </div>
+
+<div class="stats-widget">
+    <div class="stat-item">
+        <i class="fas fa-code-branch"></i>
+        <span class="counter" data-target="127">0</span>
+        <span>Commits</span>
+    </div>
+    <div class="stat-item">
+        <i class="fas fa-project-diagram"></i>
+        <span class="counter" data-target="42">0</span>
+        <span>Projetos</span>
+    </div>
+    
+</div>
+
         </nav>
     </header>
 
@@ -161,11 +182,27 @@
                 <button class="filter-btn" data-filter="html">HTML/CSS</button>
                 <button class="filter-btn" data-filter="react">React</button>
             </div>
-            <div class="projects-container" id="projects-container">
-                <!-- Projetos serão carregados dinamicamente aqui -->
-                <div class="loader">Carregando projetos...</div>
-            </div>
+          <div class="projects-container" id="projects-container">
+    <div class="project-card placeholder">
+        <div class="project-image">
+            <div class="skeleton-box"></div>
+        </div>
+        <div class="project-info">
+            <div class="skeleton-line" style="width: 80%"></div>
+            <div class="skeleton-line" style="width: 60%"></div>
+        </div>
+    </div>
         </section>
+
+<section id="tech-blog" class="section-dark">
+    <h2 class="section-title">Artigos Técnicos <span class="badge-new" id="blog-badge"></span></h2>
+    <div class="blog-grid" id="blog-container">
+        <!-- Posts serão carregados via JS -->
+    </div>
+    <a href="https://github.com/KingOFsun00/blog/issues" class="github-link" target="_blank">
+        Ver todos no GitHub <i class="fab fa-github"></i>
+    </a>
+</section>
 
         <section id="contact" class="contact">
             <div class="contact-container">
@@ -197,21 +234,24 @@
                         </div>
                     </div>
                     
-                    <form class="contact-form">
-                        <div class="form-group">
-                            <input type="text" placeholder="Seu nome" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" placeholder="Seu email" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" placeholder="Assunto">
-                        </div>
-                        <div class="form-group">
-                            <textarea placeholder="Sua mensagem" rows="5" required></textarea>
-                        </div>
-                        <button type="submit" class="cta-button">Enviar Mensagem</button>
-                    </form>
+                    <form class="contact-form" id="contactForm">
+    <div class="form-group">
+        <input type="text" id="name" name="name" placeholder="Seu nome" required minlength="3">
+    </div>
+    <div class="form-group">
+        <input type="email" id="email" name="email" placeholder="Seu email" required>
+    </div>
+    <div class="form-group">
+        <input type="text" id="subject" name="subject" placeholder="Assunto">
+    </div>
+    <div class="form-group">
+        <textarea id="message" name="message" placeholder="Sua mensagem" rows="5" required minlength="10"></textarea>
+    </div>
+    <button type="submit" class="cta-button" id="submitBtn">
+        <span class="btn-text">Enviar Mensagem</span>
+        <div class="loader"></div>
+    </button>
+</form>
                 </div>
             </div>
         </section>

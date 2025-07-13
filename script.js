@@ -38,7 +38,64 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
+    // --- Sistema de Tema Dark/Light ---
+    const initThemeSystem = () => {
+    const themeToggle = document.querySelector('.theme-switcher');
+    if (!themeToggle) return;
+
+    const html = document.documentElement;
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+    // Verifica o tema salvo no localStorage ou preferência do sistema
+    const currentTheme = localStorage.getItem('theme') || 
+                        (prefersDarkScheme.matches ? 'dark' : 'light');
+
+    // Aplica o tema inicial
+    if (currentTheme === 'dark') {
+        html.setAttribute('data-theme', 'dark');
+    }
+
+    // Atualiza ícones do botão
+    const updateButtonIcons = () => {
+        const isDark = html.hasAttribute('data-theme');
+        themeToggle.querySelector('.fa-moon').style.display = isDark ? 'none' : 'block';
+        themeToggle.querySelector('.fa-sun').style.display = isDark ? 'block' : 'none';
+    };
+
+    // Alterna o tema
+    themeToggle.addEventListener('click', () => {
+        const isDark = html.hasAttribute('data-theme');
+        
+        if (isDark) {
+            html.removeAttribute('data-theme');
+            localStorage.setItem('theme', 'light');
+        } else {
+            html.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+        }
+        
+        updateButtonIcons();
+    });
+
+    // Atualiza ícones no carregamento
+    updateButtonIcons();
+
+    // Observa mudanças no sistema operacional
+    prefersDarkScheme.addEventListener('change', e => {
+        if (!localStorage.getItem('theme')) {
+            if (e.matches) {
+                html.setAttribute('data-theme', 'dark');
+            } else {
+                html.removeAttribute('data-theme');
+            }
+            updateButtonIcons();
+        }
+    });
+};
+ 
+
     // --- Inicialização de Componentes ---
+    initThemeSystem(); // Adicionado aqui
     initCustomCursor();
     initMobileMenu();
     initSmoothScrolling();
@@ -48,348 +105,116 @@ document.addEventListener('DOMContentLoaded', function() {
     renderSkills();
     fetchGitHubProjects();
 
-    // --- Funções de Inicialização ---
+    // ... 
+    
+    // .....
+});
 
-    function initCustomCursor() {
-        const cursor = document.querySelector('.cursor');
-        if (!cursor) return;
-
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = `${e.pageX}px`;
-            cursor.style.top = `${e.pageY}px`;
-        });
-
-        document.querySelectorAll('a, button, .cta-button, .nav-links li').forEach(item => {
-            item.addEventListener('mouseenter', () => cursor.classList.add('cursor-grow'));
-            item.addEventListener('mouseleave', () => cursor.classList.remove('cursor-grow'));
-        });
-    }
-
-    function initMobileMenu() {
-        const burger = document.querySelector('.burger');
-        const navLinks = document.querySelector('.nav-links');
-        if (!burger || !navLinks) return;
-
-        burger.addEventListener('click', () => {
-            burger.classList.toggle('active');
-            navLinks.classList.toggle('active');
-        });
-
-        document.querySelectorAll('.nav-links li a').forEach(item => {
-            item.addEventListener('click', () => {
-                burger.classList.remove('active');
-                navLinks.classList.remove('active');
-            });
-        });
-    }
-
-    function initSmoothScrolling() {
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (!target) return;
-
-                const headerOffset = 80;
-                const targetPosition = target.getBoundingClientRect().top + window.scrollY - headerOffset;
-
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
-            });
-        });
-    }
-
-    function initScrollAnimations() {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('appear');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, {
-            threshold: 0.1,
-            rootMargin: "0px 0px -50px 0px"
-        });
-
-        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-    }
-
-    function initHeaderEffects() {
-        const header = document.querySelector('.header');
-        if (!header) return;
-
-        window.addEventListener('scroll', () => {
-            header.style.backgroundColor = window.scrollY > 100 ? 'white' : 'transparent';
-            header.style.boxShadow = window.scrollY > 100 ? '0 5px 20px rgba(0, 0, 0, 0.1)' : 'none';
-        });
-    }
-
-    function initTypingEffect() {
-        document.querySelectorAll('.typed').forEach(element => {
-            const text = element.textContent;
-            element.textContent = '';
-            
-            let i = 0;
-            const typingInterval = setInterval(() => {
-                if (i < text.length) {
-                    element.textContent += text.charAt(i);
-                    i++;
-                } else {
-                    clearInterval(typingInterval);
-                }
-            }, 100);
-        });
-    }
-
-    // --- Funções de Habilidades ---
-
-    function renderSkills() {
-        Object.keys(config.skills).forEach(category => {
-            const container = document.getElementById(`${category}-skills`);
-            if (!container) return;
-
-            container.innerHTML = config.skills[category].map(skill => `
-                <div class="skill-item">
-                    <img src="${skill.icon}" alt="${skill.name}" class="skill-icon">
-                    <span class="skill-name">${skill.name}</span>
-                    <div class="skill-level">
-                        <div class="skill-level-bar ${skill.level < 50 ? 'learning' : ''}" 
-                             style="width: ${skill.level}%"></div>
+// --- Blog Técnico ---
+async function fetchTechBlog() {
+    const container = document.getElementById('blog-container');
+    const badge = document.getElementById('blog-badge');
+    
+    try {
+        const response = await fetch('https://api.github.com/repos/KingOFsun00/blog/issues?state=open');
+        const posts = await response.json();
+        
+        if(posts.length > 0) {
+            badge.textContent = `${posts.length} novos`;
+            container.innerHTML = posts.slice(0, 3).map(post => `
+                <article class="blog-card">
+                    <h3>${post.title}</h3>
+                    <div class="post-excerpt">${post.body.substring(0, 150)}...</div>
+                    <div class="post-meta">
+                        <span>${new Date(post.created_at).toLocaleDateString('pt-BR')}</span>
+                        <a href="${post.html_url}" target="_blank">Ler artigo</a>
                     </div>
-                </div>
+                </article>
             `).join('');
-        });
-
-        initSkillsChart();
-    }
-
-    function initSkillsChart() {
-        const ctx = document.getElementById('skillsChart')?.getContext('2d');
-        if (!ctx || typeof Chart === 'undefined') return;
-
-        new Chart(ctx, {
-            type: 'radar',
-            data: {
-                labels: config.chart.labels,
-                datasets: [{
-                    label: "Nível de Conhecimento",
-                    data: config.chart.data,
-                    backgroundColor: [
-                        'rgba(108, 99, 255, 0.7)',
-                        'rgba(77, 68, 219, 0.7)',
-                        'rgba(255, 101, 132, 0.7)',
-                        'rgba(75, 192, 192, 0.7)',
-                        'rgba(153, 102, 255, 0.7)',
-                        'rgba(255, 159, 64, 0.7)'
-                    ],
-                    borderColor: [
-                        'rgba(108, 99, 255, 1)',
-                        'rgba(77, 68, 219, 1)',
-                        'rgba(255, 101, 132, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 2,
-                    hoverOffset: 10
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    r: {
-                        angleLines: { color: 'rgba(255, 255, 255, 0.1)' },
-                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
-                        pointLabels: { color: 'white', font: { size: 14 } },
-                        ticks: { display: false, beginAtZero: true, max: 100 }
-                    }
-                },
-                plugins: {
-                    legend: {
-                        labels: { color: 'white', font: { size: 14 } }
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: ctx => `${ctx.dataset.label}: ${ctx.raw}%`
-                        }
-                    }
-                },
-                elements: { line: { tension: 0.1 } }
-            }
-        });
-    }
-
-    // --- Funções de Projetos do GitHub ---
-
-    async function fetchGitHubProjects() {
-        const container = document.getElementById('projects-container');
-        if (!container) return;
-
-        container.innerHTML = `
-            <div class="loader">
-                <div class="spinner"></div>
-                <p>Carregando projetos do GitHub...</p>
-            </div>
-        `;
-
-        try {
-            const response = await fetch(`https://api.github.com/users/${config.github.username}/repos?sort=updated&per_page=100`);
-            if (!response.ok) throw new Error(`Erro GitHub: ${response.status}`);
-
-            const repos = await response.json();
-            const filteredRepos = filterAndSortRepos(repos);
-            displayProjects(container, filteredRepos);
-            initProjectFilter();
-
-        } catch (error) {
-            console.error('Erro ao carregar projetos:', error);
-            container.innerHTML = `
-                <div class="error-message">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <p>Não foi possível carregar os projetos do GitHub.</p>
-                    <a href="https://github.com/${config.github.username}" 
-                       target="_blank" 
-                       class="github-link">
-                        Ver meus projetos no GitHub
-                    </a>
-                </div>
-            `;
         }
+    } catch (error) {
+        container.innerHTML = `<p class="error">Blog disponível no GitHub</p>`;
     }
+}
 
-    function filterAndSortRepos(repos) {
-        return repos
-            .filter(repo => (
-                !config.github.excludeRepos.includes(repo.name) &&
-                repo.name.toLowerCase() !== config.github.username.toLowerCase() &&
-                repo.size > 0 &&
-                (config.github.includeForks || !repo.fork)
-            ))
-            .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
-            .slice(0, config.github.maxProjects);
-    }
-
-    function displayProjects(container, projects) {
-        if (projects.length === 0) {
-            container.innerHTML = `
-                <div class="no-projects">
-                    <i class="fas fa-folder-open"></i>
-                    <p>Nenhum projeto público encontrado.</p>
-                </div>
-            `;
-            return;
-        }
-
-        container.innerHTML = '';
-        projects.forEach(project => {
-            container.appendChild(createProjectCard(project));
-        });
-    }
-
-    function createProjectCard(repo) {
-        const card = document.createElement('div');
-        card.className = 'project-card fade-in';
-        card.dataset.technologies = detectTechnologies(repo).join(',').toLowerCase();
-
-        const updatedAt = new Date(repo.updated_at).toLocaleDateString('pt-BR');
-        const description = repo.description || 'Projeto de desenvolvimento sem descrição.';
-
-        card.innerHTML = `
-            <div class="project-header">
-                <h3 class="project-title">${formatProjectName(repo.name)}</h3>
-                <span class="project-date">Atualizado em ${updatedAt}</span>
-            </div>
-            
-            <div class="project-body">
-                <p class="project-description">${description}</p>
-                
-                <div class="project-meta">
-                    <div class="project-tech">
-                        ${createTechBadges(repo)}
-                    </div>
-                    
-                    <div class="project-stats">
-                        <span class="stars"><i class="fas fa-star"></i> ${repo.stargazers_count}</span>
-                        <span class="forks"><i class="fas fa-code-branch"></i> ${repo.forks_count}</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="project-footer">
-                <a href="${repo.html_url}" target="_blank" class="project-link">
-                    <i class="fab fa-github"></i> Ver código
-                </a>
-                
-                ${repo.homepage ? `
-                    <a href="${repo.homepage}" target="_blank" class="project-link demo-link">
-                        <i class="fas fa-external-link-alt"></i> Ver demo
-                    </a>
-                ` : ''}
-            </div>
-        `;
-
-        return card;
-    }
-
-    function detectTechnologies(repo) {
-        const techs = new Set();
-        if (repo.language) techs.add(repo.language);
-
-        const textToAnalyze = `${repo.name} ${repo.description || ''}`.toLowerCase();
-        const techKeywords = {
-            'react': 'React', 'angular': 'Angular', 'vue': 'Vue.js',
-            'node': 'Node.js', 'express': 'Express', 'typescript': 'TypeScript',
-            'javascript': 'JavaScript', 'python': 'Python', 'django': 'Django',
-            'flask': 'Flask', 'java': 'Java', 'spring': 'Spring', 'php': 'PHP',
-            'laravel': 'Laravel', 'html': 'HTML', 'css': 'CSS', 'sass': 'SASS',
-            'bootstrap': 'Bootstrap', 'tailwind': 'Tailwind CSS', 'jquery': 'jQuery',
-            'mysql': 'MySQL', 'postgresql': 'PostgreSQL', 'mongodb': 'MongoDB',
-            'firebase': 'Firebase', 'docker': 'Docker', 'aws': 'AWS'
+// --- Dashboard de Estatísticas ---
+function initStatsDashboard() {
+    const updateStats = async () => {
+        const [commits, repos] = await Promise.all([
+            fetchGitHubCommits(),
+            fetchGitHubRepos()
+        ]);
+        
+        animateValue('.counter[data-target="127"]', 0, commits, 2000);
+        animateValue('.counter[data-target="42"]', 0, repos, 2000);
+    };
+    
+    const animateValue = (selector, start, end, duration) => {
+        const element = document.querySelector(selector);
+        let startTimestamp = null;
+        
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            element.textContent = Math.floor(progress * (end - start) + start);
+            if (progress < 1) window.requestAnimationFrame(step);
         };
+        
+        window.requestAnimationFrame(step);
+    };
+    
+    setInterval(updateStats, 3600000); // Atualiza a cada hora
+    updateStats(); // Primeira carga
+}
 
-        Object.entries(techKeywords).forEach(([keyword, techName]) => {
-            if (textToAnalyze.includes(keyword)) techs.add(techName);
-        });
-
-        return Array.from(techs);
+// --- Carregamento Condicional de Conteúdo ---
+function loadCriticalFirst() {
+    if (isRecruiterVisitor()) {
+        fetchTechBlog(); // Prioriza conteúdo técnico
+    } else {
+        fetchGitHubProjects(); // Prioriza portfólio
     }
+}
 
-    function createTechBadges(repo) {
-        const techs = detectTechnologies(repo);
-        return techs.length > 0 
-            ? techs.map(tech => `<span class="tech-badge">${tech}</span>`).join('')
-            : '<span class="tech-badge unknown">Tecnologias diversas</span>';
-    }
+function isRecruiterVisitor() {
+    // Detecta origem LinkedIn ou tempo de permanência
+    return document.referrer.includes('linkedin') || 
+           window.performance?.navigation?.type === 1;
+}
 
-    function formatProjectName(name) {
-        return name
-            .replace(/[-_]/g, ' ')
-            .split(' ')
-            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-            .join(' ');
-    }
+// Atualizar ano no footer
+document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-    function initProjectFilter() {
-        const filterButtons = document.querySelectorAll('.filter-btn');
-        if (!filterButtons.length) return;
-
-        filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-
-                const filterValue = button.dataset.filter.toLowerCase();
-                document.querySelectorAll('.project-card').forEach(project => {
-                    project.style.display = filterValue === 'all' || 
-                        project.dataset.technologies.includes(filterValue) 
-                        ? 'block' 
-                        : 'none';
-                });
-            });
-        });
+// Botão voltar ao topo
+const backToTopButton = document.getElementById('backToTop');
+window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 300) {
+        backToTopButton.classList.add('visible');
+    } else {
+        backToTopButton.classList.remove('visible');
     }
 });
+
+backToTopButton.addEventListener('click', () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
+
+// Formulário de contato
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.classList.add('form-submitting');
+        
+        // Simular envio (substituir por código real)
+        setTimeout(() => {
+            submitBtn.classList.remove('form-submitting');
+            alert('Mensagem enviada com sucesso!');
+            contactForm.reset();
+        }, 1500);
+    });
+}
