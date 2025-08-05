@@ -20,12 +20,28 @@ const config = {
         level: 85,
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
       },
+      {
+        name: "TypeScript",
+        level: 80,
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+      },
       { name: "React", level: 80, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+      {
+        name: "Angular",
+        level: 75,
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg",
+      },
       {
         name: "Vue.js",
         level: 70,
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg",
       },
+      {
+        name: "Bootstrap",
+        level: 85,
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg",
+      },
+      { name: "Sass", level: 80, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sass/sass-original.svg" },
     ],
     backend: [
       {
@@ -40,10 +56,46 @@ const config = {
       },
       {
         name: "Python",
-        level: 75,
+        level: 85,
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
       },
-      { name: "Java", level: 70, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" },
+      { name: "Django", level: 80, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" },
+      { name: "Java", level: 80, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" },
+      {
+        name: "Spring Boot",
+        level: 75,
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg",
+      },
+      {
+        name: "C/C++",
+        level: 75,
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg",
+      },
+      { name: "C#", level: 70, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" },
+      {
+        name: ".NET",
+        level: 70,
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dot-net/dot-net-original.svg",
+      },
+    ],
+    database: [
+      { name: "MySQL", level: 85, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
+      {
+        name: "PostgreSQL",
+        level: 80,
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
+      },
+      {
+        name: "MongoDB",
+        level: 75,
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
+      },
+      {
+        name: "SQLite",
+        level: 80,
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg",
+      },
+      { name: "Redis", level: 70, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" },
     ],
     tools: [
       { name: "Git", level: 85, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
@@ -57,51 +109,117 @@ const config = {
         level: 90,
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg",
       },
+      {
+        name: "IntelliJ IDEA",
+        level: 80,
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/intellij/intellij-original.svg",
+      },
+      {
+        name: "Docker",
+        level: 75,
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
+      },
+      { name: "Linux", level: 80, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" },
       { name: "Figma", level: 70, icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" },
+      { name: "Postman", level: 85, icon: "https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg" },
     ],
   },
   skills3D: [
     {
       name: "JavaScript",
       color: "#f0db4f",
-      level: 0.9,
-      description: "Experiência com ES6+, Node.js, Express e desenvolvimento de aplicações web complexas.",
-      category: "Language",
+      level: 0.85,
+      description:
+        "Experiência avançada com ES6+, Node.js, Express e desenvolvimento de aplicações web complexas. Domínio de conceitos modernos como async/await, closures e programação funcional.",
+      category: "Frontend",
     },
     {
       name: "Python",
       color: "#3776ab",
-      level: 0.7,
-      description: "Desenvolvimento de scripts, automação e aplicações com Flask e Django.",
-      category: "Language",
+      level: 0.85,
+      description:
+        "Desenvolvimento completo com Python, incluindo Django para web, scripts de automação, análise de dados e integração com APIs. Experiência com bibliotecas como Pandas e NumPy.",
+      category: "Backend",
+    },
+    {
+      name: "Java",
+      color: "#ed8b00",
+      level: 0.8,
+      description:
+        "Desenvolvimento robusto com Java, Spring Boot, Maven e Gradle. Experiência com arquiteturas enterprise, microserviços e desenvolvimento de aplicações desktop com Swing/JavaFX.",
+      category: "Backend",
     },
     {
       name: "React",
       color: "#61dafb",
       level: 0.8,
-      description: "Desenvolvimento de interfaces reativas com Hooks, Context API e Redux.",
+      description:
+        "Desenvolvimento de interfaces modernas e reativas com Hooks, Context API, Redux e Next.js. Experiência com testes unitários usando Jest e React Testing Library.",
       category: "Frontend",
     },
     {
-      name: "HTML/CSS",
-      color: "#e34c26",
-      level: 0.95,
-      description: "Criação de layouts responsivos com CSS moderno (Flexbox, Grid).",
-      category: "Frontend",
-    },
-    {
-      name: "Git",
-      color: "#f34f29",
+      name: "Angular",
+      color: "#dd0031",
       level: 0.75,
-      description: "Controle de versão, trabalho em equipe e fluxos Git Flow.",
-      category: "Tools",
+      description:
+        "Desenvolvimento de SPAs complexas com Angular, TypeScript, RxJS e Angular Material. Experiência com roteamento avançado, guards e interceptors.",
+      category: "Frontend",
+    },
+    {
+      name: "C/C++",
+      color: "#00599c",
+      level: 0.75,
+      description:
+        "Programação de sistemas, algoritmos de alta performance e desenvolvimento de aplicações nativas. Experiência com ponteiros, gerenciamento de memória e STL.",
+      category: "Systems",
+    },
+    {
+      name: "SQL",
+      color: "#336791",
+      level: 0.85,
+      description:
+        "Domínio avançado de SQL com MySQL, PostgreSQL e SQLite. Experiência com otimização de queries, procedures, triggers e design de banco de dados relacionais.",
+      category: "Database",
+    },
+    {
+      name: "Django",
+      color: "#092e20",
+      level: 0.8,
+      description:
+        "Framework web completo para Python, incluindo Django REST Framework, autenticação, ORM avançado e deploy em produção. Experiência com arquitetura MVT.",
+      category: "Backend",
+    },
+    {
+      name: "MongoDB",
+      color: "#47a248",
+      level: 0.75,
+      description:
+        "Banco de dados NoSQL para aplicações modernas. Experiência com agregações complexas, indexação, replicação e integração com Node.js via Mongoose.",
+      category: "Database",
     },
     {
       name: "Node.js",
       color: "#339933",
       level: 0.85,
-      description: "Desenvolvimento de APIs REST, serviços backend e aplicações server-side.",
+      description:
+        "Desenvolvimento de APIs REST e GraphQL, microserviços, aplicações real-time com Socket.io e integração com diversos bancos de dados e serviços externos.",
       category: "Backend",
+    },
+    {
+      name: "Git",
+      color: "#f34f29",
+      level: 0.85,
+      description:
+        "Controle de versão avançado, Git Flow, resolução de conflitos, branching strategies e colaboração em equipe. Experiência com GitHub Actions para CI/CD.",
+      category: "Tools",
+    },
+    {
+      name: "Lua",
+      color: "#000080",
+      level: 0.7,
+      description:
+        "Linguagem de script leve e poderosa. Experiência com desenvolvimento de extensões, automação de tarefas e integração com aplicações C/C++.",
+      category: "Scripting",
     },
   ],
 }
@@ -394,7 +512,7 @@ const updateThreeDLighting = () => {
 
 // Renderizar habilidades tradicionais
 const renderSkills = () => {
-  const { frontend, backend, tools } = config.skills
+  const { frontend, backend, database, tools } = config.skills
 
   const renderSkillList = (skills, containerId) => {
     const container = document.getElementById(containerId)
@@ -423,6 +541,7 @@ const renderSkills = () => {
 
   renderSkillList(frontend, "frontend-skills")
   renderSkillList(backend, "backend-skills")
+  renderSkillList(database, "database-skills")
   renderSkillList(tools, "tools-skills")
 }
 
@@ -732,6 +851,14 @@ const initSkillsToggle = () => {
   })
 }
 
+// Adicionar esta função antes da função fetchGitHubProjects:
+function checkImageExists(imageSrc, callback) {
+  const img = new Image()
+  img.onload = () => callback(true)
+  img.onerror = () => callback(false)
+  img.src = imageSrc
+}
+
 // Buscar projetos do GitHub
 const fetchGitHubProjects = async () => {
   const container = document.getElementById("projects-container")
@@ -765,16 +892,42 @@ const fetchGitHubProjects = async () => {
       return
     }
 
+    // Dentro do forEach dos repos, após criar o projectCard:
     filteredRepos.forEach((repo, index) => {
       const projectCard = document.createElement("div")
       projectCard.className = "project-card"
       projectCard.setAttribute("data-category", repo.language?.toLowerCase() || "other")
 
-      const imageUrl = `https://via.placeholder.com/400x200/6c63ff/ffffff?text=${encodeURIComponent(repo.name)}`
+      // Tentar diferentes extensões de imagem
+      const possibleExtensions = ["png", "jpg", "jpeg", "webp", "gif"]
+      const imageFound = false
 
-      projectCard.innerHTML = `
+      const tryNextExtension = (extensionIndex = 0) => {
+        if (extensionIndex >= possibleExtensions.length) {
+          // Se nenhuma imagem foi encontrada, usar placeholder
+          renderProjectCard(
+            repo,
+            `https://via.placeholder.com/400x200/6c63ff/ffffff?text=${encodeURIComponent(repo.name)}`,
+          )
+          return
+        }
+
+        const extension = possibleExtensions[extensionIndex]
+        const imagePath = `./images/${repo.name}.${extension}`
+
+        checkImageExists(imagePath, (exists) => {
+          if (exists) {
+            renderProjectCard(repo, imagePath)
+          } else {
+            tryNextExtension(extensionIndex + 1)
+          }
+        })
+      }
+
+      const renderProjectCard = (repo, imageSrc) => {
+        projectCard.innerHTML = `
                 <div class="project-image-container">
-                    <img src="${imageUrl}" alt="${repo.name}" class="project-image">
+                    <img src="${imageSrc}" alt="${repo.name}" class="project-image">
                     <div class="project-overlay">
                         <h3>${repo.name}</h3>
                     </div>
@@ -799,15 +952,17 @@ const fetchGitHubProjects = async () => {
                         ${
                           repo.homepage
                             ? `<a href="${repo.homepage}" target="_blank" class="project-link demo-link">
-                            <i class="fas fa-external-link-alt"></i> Demo
-                        </a>`
+                        <i class="fas fa-external-link-alt"></i> Demo
+                    </a>`
                             : ""
                         }
                     </div>
                 </div>
             `
+        container.appendChild(projectCard)
+      }
 
-      container.appendChild(projectCard)
+      tryNextExtension()
     })
 
     // Inicializar filtros
@@ -864,6 +1019,7 @@ const getLanguageColor = (language) => {
     Ruby: "#701516",
     "C++": "#f34b7d",
     C: "#555555",
+    "C#": "#239120",
     Shell: "#89e051",
     Swift: "#ffac45",
     Kotlin: "#F18E33",
@@ -872,6 +1028,14 @@ const getLanguageColor = (language) => {
     Dart: "#00B4AB",
     Vue: "#2c3e50",
     React: "#61dafb",
+    Angular: "#dd0031",
+    Django: "#092e20",
+    Spring: "#6db33f",
+    Lua: "#000080",
+    SQL: "#336791",
+    MongoDB: "#47a248",
+    Docker: "#2496ed",
+    Linux: "#fcc624",
   }
 
   return colors[language] || "#6c63ff"
