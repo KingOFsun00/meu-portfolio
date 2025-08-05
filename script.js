@@ -34,7 +34,14 @@ const config = {
     chart: {
         labels: ["Front-end", "Back-end", "Mobile", "UI/UX", "Banco de Dados", "DevOps"],
         data: [85, 75, 65, 70, 80, 60]
-    }
+    },
+    skills3D: [
+        { name: "JavaScript", color: "#f0db4f", level: 0.9, description: "Experiência com ES6+, Node.js, Express e desenvolvimento de aplicações web complexas." },
+        { name: "Python", color: "#3776ab", level: 0.7, description: "Desenvolvimento de scripts, automação e aplicações com Flask e Django." },
+        { name: "React", color: "#61dafb", level: 0.8, description: "Desenvolvimento de interfaces reativas com Hooks, Context API e Redux." },
+        { name: "HTML/CSS", color: "#e34c26", level: 0.95, description: "Criação de layouts responsivos com CSS moderno (Flexbox, Grid)." },
+        { name: "Git", color: "#f34f29", level: 0.75, description: "Controle de versão, trabalho em equipe e fluxos Git Flow." }
+    ]
 };
 
 // Inicializa AOS (Animate On Scroll)
@@ -167,7 +174,6 @@ const initCustomCursor = () => {
         cursor.style.opacity = '1';
     });
     
-    // Efeito ao passar por cima de links e botões
     const interactiveElements = document.querySelectorAll('a, button, .cta-button, .project-card');
     
     interactiveElements.forEach(el => {
@@ -193,7 +199,6 @@ const initMobileMenu = () => {
         burger.classList.toggle('active');
     });
     
-    // Fechar menu ao clicar em um link
     document.querySelectorAll('.nav-links a').forEach(link => {
         link.addEventListener('click', () => {
             navLinks.classList.remove('active');
@@ -242,25 +247,32 @@ const initThemeSystem = () => {
     const html = document.documentElement;
     const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
 
-    // Verifica o tema salvo no localStorage ou preferência do sistema
+    // Verificar tema salvo ou preferência do sistema
     const currentTheme = localStorage.getItem('theme') || 
-                        (prefersDarkScheme.matches ? 'dark' : 'light');
+                       (prefersDarkScheme.matches ? 'dark' : 'light');
 
-    // Aplica o tema inicial
+    // Aplicar tema inicial
     if (currentTheme === 'dark') {
         html.setAttribute('data-theme', 'dark');
+    } else {
+        html.removeAttribute('data-theme');
     }
 
-    // Atualiza ícones do botão
+    // Atualizar ícones
     const updateButtonIcons = () => {
-        const isDark = html.hasAttribute('data-theme');
+        const isDark = html.getAttribute('data-theme') === 'dark';
         themeToggle.querySelector('.fa-moon').style.display = isDark ? 'none' : 'block';
         themeToggle.querySelector('.fa-sun').style.display = isDark ? 'block' : 'none';
+        
+        // Forçar redesenho do canvas 3D quando o tema mudar
+        if (window.init3DSkills) {
+            init3DSkills();
+        }
     };
 
-    // Alterna o tema
+    // Alternar tema
     themeToggle.addEventListener('click', () => {
-        const isDark = html.hasAttribute('data-theme');
+        const isDark = html.getAttribute('data-theme') === 'dark';
         
         if (isDark) {
             html.removeAttribute('data-theme');
@@ -273,20 +285,8 @@ const initThemeSystem = () => {
         updateButtonIcons();
     });
 
-    // Atualiza ícones no carregamento
+    // Atualizar ícones iniciais
     updateButtonIcons();
-
-    // Observa mudanças no sistema operacional
-    prefersDarkScheme.addEventListener('change', e => {
-        if (!localStorage.getItem('theme')) {
-            if (e.matches) {
-                html.setAttribute('data-theme', 'dark');
-            } else {
-                html.removeAttribute('data-theme');
-            }
-            updateButtonIcons();
-        }
-    });
 };
 
 // Renderizar habilidades
@@ -320,7 +320,6 @@ const renderSkills = () => {
     renderSkillList(mobile, 'mobile-skills');
     renderSkillList(tools, 'tools-skills');
     
-    // Gráfico de habilidades
     const ctx = document.getElementById('skillsChart').getContext('2d');
     new Chart(ctx, {
         type: 'radar',
@@ -352,6 +351,196 @@ const renderSkills = () => {
     });
 };
 
+// Visualização 3D de habilidades
+function init3DSkills() {
+    console.log("Tentando iniciar visualização 3D...");
+    
+    const canvas = document.getElementById('skills3DCanvas');
+    if (!canvas) {
+        console.error("Canvas não encontrado!");
+        showFallbackSkills();
+        return;
+    }
+
+    // Verificação robusta de WebGL
+    try {
+        const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+        if (!gl) {
+            throw new Error("WebGL não suportado");
+        }
+    } catch (e) {
+        console.error("Erro WebGL:", e.message);
+        showFallbackSkills();
+        return;
+    }
+
+    if (!window.THREE) {
+        console.error("Three.js não está disponível");
+        showFallbackSkills();
+        return;
+    }
+
+    // 1. Cena
+    const scene = new THREE.Scene();
+    scene.background = null;
+
+    // 2. Câmera
+    const camera = new THREE.PerspectiveCamera(
+        75,
+        canvas.clientWidth / canvas.clientHeight,
+        0.1,
+        1000
+    );
+    camera.position.z = 8;
+
+    // 3. Renderer
+    const renderer = new THREE.WebGLRenderer({
+        canvas: canvas,
+        antialias: true,
+        alpha: true
+    });
+    renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+    renderer.setClearColor(0x000000, 0);
+
+    // 4. Iluminação melhorada
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+    scene.add(ambientLight);
+    
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
+    directionalLight.position.set(5, 5, 5);
+    scene.add(directionalLight);
+
+    // 5. Criar cubos
+    const cubes = [];
+    const radius = 4;
+
+    config.skills3D.forEach((skill, index) => {
+        const geometry = new THREE.BoxGeometry(1.2, 1.2, 1.2);
+        const material = new THREE.MeshPhongMaterial({
+            color: new THREE.Color(skill.color),
+            shininess: 100,
+            specular: 0x111111
+        });
+
+        const cube = new THREE.Mesh(geometry, material);
+        
+        const angle = (index / config.skills3D.length) * Math.PI * 2;
+        cube.position.x = Math.cos(angle) * radius;
+        cube.position.z = Math.sin(angle) * radius;
+        cube.position.y = 0;
+        
+        cube.userData = skill;
+        scene.add(cube);
+        cubes.push(cube);
+    });
+
+    // 6. Interação
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+
+    function updateSkillDetails(skill) {
+        const detailsElement = document.getElementById('skillDetails');
+        if (detailsElement) {
+            detailsElement.innerHTML = `
+                <div class="skill-info active">
+                    <h3 style="color: ${skill.color}">${skill.name}</h3>
+                    <div class="skill-level">
+                        <span>Nível: ${Math.round(skill.level * 100)}%</span>
+                        <div class="level-bar">
+                            <div class="level-progress" 
+                                 style="background-color: ${skill.color}; width: ${skill.level * 100}%"></div>
+                        </div>
+                    </div>
+                    <p class="skill-description">${skill.description}</p>
+                </div>
+            `;
+        }
+    }
+
+    function onMouseClick(event) {
+        const rect = canvas.getBoundingClientRect();
+        mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+        mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+        
+        raycaster.setFromCamera(mouse, camera);
+        const intersects = raycaster.intersectObjects(cubes);
+        
+        if (intersects.length > 0) {
+            const cube = intersects[0].object;
+            updateSkillDetails(cube.userData);
+            
+            // Animação com GSAP
+            cubes.forEach(c => {
+                gsap.to(c.scale, {
+                    x: 1, y: 1, z: 1,
+                    duration: 0.3
+                });
+            });
+            
+            gsap.to(cube.scale, {
+                x: 1.5, y: 1.5, z: 1.5,
+                duration: 0.3
+            });
+        }
+    }
+
+    // 7. Redimensionamento
+    function onWindowResize() {
+        const width = canvas.clientWidth;
+        const height = canvas.clientHeight;
+        
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(width, height);
+    }
+
+    // 8. Eventos
+    canvas.addEventListener('click', onMouseClick);
+    window.addEventListener('resize', onWindowResize);
+
+    // 9. Mostrar primeira skill por padrão
+    if (cubes.length > 0) {
+        updateSkillDetails(cubes[0].userData);
+    }
+
+    // 10. Animação
+    function animate() {
+        requestAnimationFrame(animate);
+        
+        cubes.forEach((cube, index) => {
+            cube.rotation.x += 0.005;
+            cube.rotation.y += 0.01;
+            cube.position.y = Math.sin(Date.now() * 0.001 + index) * 0.3;
+        });
+        
+        renderer.render(scene, camera);
+    }
+    
+    animate();
+}
+
+function showFallbackSkills() {
+    console.log("Ativando fallback para habilidades 3D");
+    const container = document.querySelector('.skills-3d-container');
+    if (container) {
+        container.innerHTML = `
+            <div class="fallback-skills">
+                ${config.skills3D.map(skill => `
+                    <div class="skill-item">
+                        <div class="skill-color" style="background-color: ${skill.color}">
+                            <i class="fab fa-${skill.name.toLowerCase()}"></i>
+                        </div>
+                        <h3>${skill.name}</h3>
+                        <div class="skill-level">
+                            <div class="level-bar" style="width: ${skill.level * 100}%"></div>
+                        </div>
+                        <p class="skill-description">${skill.description}</p>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    }
+}
 // Buscar projetos do GitHub
 const fetchGitHubProjects = async () => {
     const container = document.getElementById('projects-container');
@@ -362,16 +551,15 @@ const fetchGitHubProjects = async () => {
         
         container.innerHTML = '';
         
-        // Mapeamento de repositórios para imagens personalizadas
         const projectImages = {
-    'bh-urban-analytics': 'bh-urban-analytics-preview.png',
-    'aniversario-paulo': 'aniversario-paulo-screenshot.png',
-    'generative-art': 'generative-art-demo.png',
-    'music-player': 'music-player-interface.png',
-    'meu-portfolio': 'portfolio-screenshot.png',
-    'pousada': 'pousada-website.png'
-};
-        // Fallback para projetos sem imagem específica
+            'bh-urban-analytics': 'bh-urban-analytics-preview.png',
+            'aniversario-paulo': 'aniversario-paulo-screenshot.png',
+            'generative-art': 'generative-art-demo.png',
+            'music-player': 'music-player-interface.png',
+            'meu-portfolio': 'portfolio-screenshot.png',
+            'pousada': 'pousada-website.png'
+        };
+        
         const defaultImages = [
             'default-project-1.jpg',
             'default-project-2.jpg',
@@ -387,13 +575,10 @@ const fetchGitHubProjects = async () => {
             projectCard.className = 'project-card';
             projectCard.setAttribute('data-category', repo.language?.toLowerCase() || 'other');
             
-            // Determinar a imagem a ser usada
             let imageUrl;
             if (projectImages[repo.name]) {
-                // Imagem específica para o repositório
                 imageUrl = `project-images/${projectImages[repo.name]}`;
             } else {
-                // Imagem padrão (usando índice para variar)
                 const defaultImgIndex = index % defaultImages.length;
                 imageUrl = `project-images/${defaultImages[defaultImgIndex]}`;
             }
@@ -429,7 +614,6 @@ const fetchGitHubProjects = async () => {
             container.appendChild(projectCard);
         });
 
-        // Filtro de projetos
         const filterButtons = document.querySelectorAll('.filter-btn');
         
         filterButtons.forEach(button => {
@@ -460,7 +644,6 @@ const fetchGitHubProjects = async () => {
     }
 };
 
-// Função auxiliar para obter cores de linguagens
 const getLanguageColor = (language) => {
     const colors = {
         'JavaScript': '#f1e05a',
@@ -501,12 +684,10 @@ const initContactForm = () => {
             btnText.textContent = 'Enviando...';
             loader.style.display = 'block';
             
-            // Simular envio (substituir por código real)
             setTimeout(() => {
                 btnText.textContent = 'Mensagem Enviada!';
                 loader.style.display = 'none';
                 
-                // Resetar formulário
                 setTimeout(() => {
                     form.reset();
                     btnText.textContent = 'Enviar Mensagem';
@@ -542,6 +723,19 @@ const updateYear = () => {
 
 // Inicialização de todos os componentes
 document.addEventListener('DOMContentLoaded', () => {
+    console.log("DOM completamente carregado");
+    
+    // Verificar Three.js
+    console.log("Three.js carregado:", !!window.THREE);
+    
+    // Verificar WebGL
+    const canvas = document.createElement('canvas');
+    console.log("WebGL suportado:", !!canvas.getContext('webgl'));
+    
+    // Verificar tema atual
+    console.log("Tema atual:", localStorage.getItem('theme') || 'system');
+    
+    // Inicializar tudo
     initCustomCursor();
     initMobileMenu();
     initSmoothScrolling();
@@ -552,4 +746,32 @@ document.addEventListener('DOMContentLoaded', () => {
     initContactForm();
     initCounterAnimation();
     updateYear();
+    init3DSkills();
+});
+
+if (!window.THREE) {
+    console.error("Three.js não foi carregado corretamente!");
+    // Mostra o fallback imediatamente
+    document.querySelector('.skills-3d-container').innerHTML = `
+        <div class="fallback-skills">
+            ${config.skills3D.map(skill => `
+                <div class="skill-item">
+                    <div class="skill-color" style="background-color: ${skill.color}"></div>
+                    <h3>${skill.name}</h3>
+                    <div class="skill-level">
+                        <div class="level-bar" style="width: ${skill.level * 100}%"></div>
+                    </div>
+                </div>
+            `).join('')}
+        </div>
+    `;
+    return;
+}
+
+// Verificação de dependências
+window.addEventListener('load', () => {
+    if (!window.THREE) {
+        console.error('Three.js não carregou corretamente');
+        showFallbackSkills();
+    }
 });
