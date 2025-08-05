@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matheus Araújo | Portfólio Full Stack</title>
+    <meta name="description" content="Portfólio de Matheus Araújo, Desenvolvedor Full Stack">
+    <meta name="theme-color" content="#6c63ff">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="cursor"></div>
+    <div id="particles-js"></div>
+    
+    <header class="header">
+        <nav class="navbar">
+            <div class="logo">Matheus<span>.</span></div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">Sobre</a></li>
+                <li><a href="#skills">Habilidades</a></li>
+                <li><a href="#projects">Projetos</a></li>
+                <li><a href="#contact">Contato</a></li>
+            </ul>
+            
+            <button class="theme-switcher" aria-label="Alternar tema">
+                <i class="fas fa-moon"></i>
+                <i class="fas fa-sun"></i>
+            </button>
+
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content" data-aos="fade-right">
+                <h1 class="hero-title">Olá, eu sou <span class="highlight">Matheus Araújo</span></h1>
+                <h2 class="hero-subtitle">Desenvolvedor Full Stack</h2>
+                <p class="hero-description">
+                    Estudante universitário da UNINTER especializado em desenvolvimento Full Stack, 
+                    com experiência em diversas tecnologias modernas para criação de soluções web completas e eficientes.
+                </p>
+                <a href="#projects" class="cta-button">Ver meus projetos</a>
+                
+                <div class="social-links-hero">
+                    <a href="https://github.com/KingOFsun00" target="_blank" aria-label="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="#" target="_blank" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="#" target="_blank" aria-label="Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="hero-image" data-aos="fade-left">
+                <div class="image-wrapper">
+                    <img src="https://via.placeholder.com/400x400/6c63ff/ffffff?text=Matheus" alt="Matheus Araújo">
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about">
+            <div class="container">
+                <div class="about-container">
+                    <div class="about-image" data-aos="fade-right">
+                        <img src="https://via.placeholder.com/500x600/6c63ff/ffffff?text=Profile" alt="Matheus Araújo" class="profile-img">
+                        <div class="about-bg-shape"></div>
+                    </div>
+                    <div class="about-content" data-aos="fade-left">
+                        <h2 class="section-title">Sobre <span class="highlight">Mim</span></h2>
+                        <p class="about-text">
+                            Sou um desenvolvedor Full Stack apaixonado por tecnologia e soluções inovadoras. 
+                            Atualmente cursando Análise e Desenvolvimento de Sistemas na UNINTER, busco 
+                            constantemente aprimorar minhas habilidades e aprender novas tecnologias.
+                        </p>
+                        <p class="about-text">
+                            Minha jornada na programação começou quando eu tinha 15 anos, criando pequenos 
+                            scripts para automatizar tarefas. Desde então, desenvolvi uma paixão por resolver 
+                            problemas complexos através do código e criar experiências digitais significativas.
+                        </p>
+                        <p class="about-text">
+                            Acredito que a tecnologia deve ser acessível, intuitiva e transformadora. 
+                            Meu objetivo é desenvolver soluções que impactem positivamente a vida das pessoas, 
+                            combinando funcionalidade robusta com design cuidadoso.
+                        </p>
+                        <div class="about-details">
+                            <div class="detail-item">
+                                <i class="fas fa-user-graduate"></i>
+                                <div>
+                                    <h4>Formação</h4>
+                                    <p>Análise e Desenvolvimento de Sistemas - UNINTER (Cursando)</p>
+                                </div>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-laptop-code"></i>
+                                <div>
+                                    <h4>Experiência</h4>
+                                    <p>2+ anos desenvolvendo projetos pessoais e freelances</p>
+                                </div>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-heart"></i>
+                                <div>
+                                    <h4>Interesses</h4>
+                                    <p>IA, IoT, Desenvolvimento Mobile, Web e Software</p>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#contact" class="cta-button">Vamos conversar</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="skills">
+            <div class="container">
+                <h2 class="section-title">Minhas Habilidades</h2>
+                <p class="section-subtitle">Interaja com os elementos 3D para explorar minhas competências</p>
+                
+                <div class="skills-toggle">
+                    <button class="toggle-btn active" data-view="3d">Visualização 3D</button>
+                    <button class="toggle-btn" data-view="list">Lista Detalhada</button>
+                </div>
+
+                <div class="skills-container">
+                    <!-- Visualização 3D -->
+                    <div class="skills-3d-view active">
+                        <div class="skills-3d-wrapper">
+                            <div class="skills-3d-canvas-container">
+                                <canvas id="skills3DCanvas"></canvas>
+                                <div class="canvas-overlay">
+                                    <p>🖱️ Clique nas esferas para ver detalhes • Arraste para rotacionar</p>
+                                </div>
+                            </div>
+                            <div class="skills-details-panel">
+                                <div id="skillDetails" class="skill-details">
+                                    <div class="default-message">
+                                        <i class="fas fa-mouse-pointer"></i>
+                                        <h3>Clique em uma esfera</h3>
+                                        <p>Selecione uma habilidade para ver detalhes</p>
+                                    </div>
+                                </div>
+                                <div class="skills-grid">
+                                    <!-- Skills buttons will be generated by JS -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lista de habilidades -->
+                    <div class="skills-list-view">
+                        <div class="skills-categories">
+                            <div class="skill-category" data-aos="fade-up">
+                                <div class="category-header">
+                                    <i class="fas fa-code"></i>
+                                    <h3>Frontend</h3>
+                                </div>
+                                <div class="skills-list" id="frontend-skills">
+                                    <!-- Will be populated by JS -->
+                                </div>
+                            </div>
+                            
+                            <div class="skill-category" data-aos="fade-up" data-aos-delay="100">
+                                <div class="category-header">
+                                    <i class="fas fa-server"></i>
+                                    <h3>Backend</h3>
+                                </div>
+                                <div class="skills-list" id="backend-skills">
+                                    <!-- Will be populated by JS -->
+                                </div>
+                            </div>
+                            
+                            <div class="skill-category" data-aos="fade-up" data-aos-delay="200">
+                                <div class="category-header">
+                                    <i class="fas fa-tools"></i>
+                                    <h3>Ferramentas</h3>
+                                </div>
+                                <div class="skills-list" id="tools-skills">
+                                    <!-- Will be populated by JS -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="projects">
+            <div class="container">
+                <h2 class="section-title">Meus Projetos</h2>
+                <p class="section-subtitle">Projetos desenvolvidos e disponíveis no GitHub</p>
+                
+                <div class="projects-filter">
+                    <button class="filter-btn active" data-filter="all">Todos</button>
+                    <button class="filter-btn" data-filter="javascript">JavaScript</button>
+                    <button class="filter-btn" data-filter="html">HTML/CSS</button>
+                    <button class="filter-btn" data-filter="python">Python</button>
+                </div>
+                
+                <div class="projects-grid" id="projects-container">
+                    <div class="loading-projects">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Carregando projetos do GitHub...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <div class="container">
+                <h2 class="section-title">Entre em <span class="highlight">Contato</span></h2>
+                <p class="section-subtitle">Estou disponível para oportunidades, colaborações e projetos</p>
+                
+                <div class="contact-content">
+                    <div class="contact-info" data-aos="fade-right">
+                        <div class="info-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h4>Email</h4>
+                                <p>Matheuslima3411@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-phone-alt"></i>
+                            <div>
+                                <h4>Telefone</h4>
+                                <p>(31) 99062-9171</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h4>Localização</h4>
+                                <p>Belo Horizonte, Brasil</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <form class="contact-form" id="contactForm" data-aos="fade-left">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <input type="text" id="firstName" name="firstName" placeholder="Nome" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="lastName" name="lastName" placeholder="Sobrenome" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" placeholder="Seu email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="subject" name="subject" placeholder="Assunto" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" name="message" placeholder="Sua mensagem" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="cta-button" id="submitBtn">
+                            <span class="btn-text">Enviar Mensagem</span>
+                            <div class="loader"></div>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <div class="logo">Matheus<span>.</span></div>
+                    <p>Desenvolvendo soluções digitais com criatividade e tecnologia.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">Sobre</a></li>
+                        <li><a href="#skills">Habilidades</a></li>
+                        <li><a href="#projects">Projetos</a></li>
+                        <li><a href="#contact">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>Redes Sociais</h4>
+                    <div class="social-links">
+                        <a href="https://github.com/KingOFsun00" target="_blank" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" target="_blank" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" target="_blank" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" target="_blank" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> Matheus Araújo. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
